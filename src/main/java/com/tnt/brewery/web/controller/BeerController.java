@@ -2,6 +2,8 @@ package com.tnt.brewery.web.controller;
 
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ public class BeerController {
 	}
 
 	@PostMapping
-	public ResponseEntity createBear(@RequestBody final BeerDto beerDto) {
+	public ResponseEntity createBear(@RequestBody @Valid final BeerDto beerDto) {
 		// TODO: Implementation
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
