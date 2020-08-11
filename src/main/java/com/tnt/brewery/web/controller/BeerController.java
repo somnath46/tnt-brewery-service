@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tnt.brewery.model.BeerDto;
+import com.tnt.brewery.service.mapper.BeerMapper;
 
 @RestController
 @RequestMapping("/api/v1/beer")
 public class BeerController {
+
+//	@Autowired
+//	private BeerMapper beerMapper;
 
 	@GetMapping("/{beerId}")
 	public ResponseEntity<BeerDto> getBeer(@PathVariable final UUID beerId) {

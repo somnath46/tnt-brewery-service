@@ -1,6 +1,7 @@
 package com.tnt.brewery.model;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -13,8 +14,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,9 +27,9 @@ public class BeerDto {
 	@Null
 	private Integer version;
 	@Null
-	private OffsetDateTime createdDate;
+	private Instant createdDate;
 	@Null
-	private OffsetDateTime lastModificationDate;
+	private Instant lastModificationDate;
 	@NotEmpty
 	private String beerName;
 	@NotNull

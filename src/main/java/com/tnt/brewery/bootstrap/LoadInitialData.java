@@ -2,6 +2,8 @@ package com.tnt.brewery.bootstrap;
 
 import java.math.BigDecimal;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,7 @@ import com.tnt.brewery.model.BeerStyleEnum;
 import com.tnt.brewery.repository.BeerRepository;
 
 @Component
+@Transactional
 public class LoadInitialData implements CommandLineRunner {
 
 	public static final String BEER_1_UPC = "0631234200036";
