@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.hamcrest.Matchers;
@@ -28,6 +29,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tnt.brewery.model.BeerDto;
+import com.tnt.brewery.model.BeerStyleEnum;
 
 @WebMvcTest(BeerController.class)
 public class BeerControllerTest {
@@ -37,6 +39,16 @@ public class BeerControllerTest {
 	
 	@Autowired
 	ObjectMapper objectMapper;
+	
+	// TODO: move it in separate class
+	private BeerDto createBasicBeerDto() {
+		return BeerDto.builder()
+			.beerName("Tuborg")
+			.beerStyle(BeerStyleEnum.ALE)
+			.upc(123456L)
+			.price(BigDecimal.valueOf(150.00))
+			.quantityOnHand(100).build();
+	}
 
 	@Test
 	public void testGetBeerById() throws Exception {
@@ -47,7 +59,7 @@ public class BeerControllerTest {
 
 	@Test
 	public void createBear() throws Exception {
-		String reqJsonString = objectMapper.writeValueAsString(BeerDto.builder().build());
+		String reqJsonString = objectMapper.writeValueAsString(createBasicBeerDto());
 		mockMvc.perform(post("/api/v1/beer").contentType(MediaType.APPLICATION_JSON).content(reqJsonString))
 			.andExpect(status().isCreated());
 	}
