@@ -9,5 +9,4 @@ public class TntBreweryServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TntBreweryServiceApplication.class, args);
 	}
-
 }

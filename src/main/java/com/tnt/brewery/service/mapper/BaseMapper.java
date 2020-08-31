@@ -3,9 +3,6 @@ package com.tnt.brewery.service.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.mapstruct.Mapper;
-
-//@Mapper(componentModel = "spring")
 public interface BaseMapper<D, E> {
 
 	  public D toDto(E entity);

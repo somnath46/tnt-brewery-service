@@ -1,5 +1,6 @@
 package com.tnt.brewery.web.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -16,30 +17,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tnt.brewery.model.BeerDto;
-import com.tnt.brewery.service.mapper.BeerMapper;
+import com.tnt.brewery.service.BeerService;
 
 @RestController
 @RequestMapping("/api/v1/beer")
 public class BeerController {
 
-//	@Autowired
-//	private BeerMapper beerMapper;
+	@Autowired
+	private BeerService beerService;
 
+	@GetMapping
+	public ResponseEntity<List<BeerDto>> getBeers() {
+		return new ResponseEntity<>(beerService.getBeers(), HttpStatus.OK);
+	}
+	
 	@GetMapping("/{beerId}")
 	public ResponseEntity<BeerDto> getBeer(@PathVariable final UUID beerId) {
-		// TODO: Implementation
-		return new ResponseEntity<BeerDto>(BeerDto.builder().build(), HttpStatus.OK);
+		return new ResponseEntity<>(beerService.getBeer(beerId), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity createBear(@RequestBody @Valid final BeerDto beerDto) {
-		// TODO: Implementation
-		return new ResponseEntity(HttpStatus.CREATED);
+	public ResponseEntity<BeerDto> createBear(@RequestBody @Valid final BeerDto beerDto) {
+		return new ResponseEntity<>(beerService.createBear(beerDto), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{beerId}")
-	public ResponseEntity updateBear(@PathVariable final UUID beerId, @RequestBody final BeerDto beerDto) {
-		// TODO: Implementation
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	public ResponseEntity<BeerDto> updateBear(@PathVariable final UUID beerId, @RequestBody final BeerDto beerDto) {
+		return new ResponseEntity<>(beerService.updateBear(beerId, beerDto), HttpStatus.OK);
 	}
 }

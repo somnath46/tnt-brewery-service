@@ -1,7 +1,6 @@
 package com.tnt.brewery.service.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import com.tnt.brewery.domain.Beer;
 import com.tnt.brewery.model.BeerDto;

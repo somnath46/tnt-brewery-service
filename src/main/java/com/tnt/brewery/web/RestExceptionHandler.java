@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.tnt.brewery.exception.InvalidIdentifierException;
 import com.tnt.brewery.web.error.ErrorDto;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -41,10 +42,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(errorDtos, HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(InvalidIdentifierException.class)
+	public ResponseEntity<ErrorDto> handleInvalidIdentifierException(InvalidIdentifierException e) {
+		logger.error("error occurred: ", e);
+		ErrorDto errorDto = ErrorDto.builder().message(e.getMessage()).build();
+		return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorDto> handleException(Exception e) {
 		logger.error("error occurred: ", e);
-		ErrorDto errorDto = ErrorDto.builder().message(e.getMessage() != null ? e.getMessage() : "Internal server error!!").build();
+		ErrorDto errorDto = ErrorDto.builder()
+				.message(e.getMessage() != null ? e.getMessage() : "Internal server error!!").build();
 		return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
 	}
 
