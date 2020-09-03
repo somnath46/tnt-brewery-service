@@ -3,33 +3,22 @@ package com.tnt.brewery.web.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tnt.brewery.model.BeerDto;
 import com.tnt.brewery.model.BeerStyleEnum;
+import com.tnt.brewery.service.BeerService;
 
 @WebMvcTest(BeerController.class)
 public class BeerControllerTest {
@@ -39,6 +28,9 @@ public class BeerControllerTest {
 	
 	@Autowired
 	ObjectMapper objectMapper;
+	
+	@MockBean
+	BeerService beerService;
 	
 	// TODO: move it in separate class
 	private BeerDto createBasicBeerDto() {
@@ -53,8 +45,7 @@ public class BeerControllerTest {
 	@Test
 	public void testGetBeerById() throws Exception {
 		mockMvc.perform(get("/api/v1/beer/" + UUID.randomUUID()))
-			.andExpect(status().isOk())
-			.andExpect(content().contentType(MediaType.APPLICATION_JSON));
+			.andExpect(status().isOk());
 	}
 
 	@Test
@@ -68,6 +59,6 @@ public class BeerControllerTest {
 	public void updateBear() throws Exception {
 		String reqJsonString = objectMapper.writeValueAsString(BeerDto.builder().build());
 		mockMvc.perform(put("/api/v1/beer/" + UUID.randomUUID()).contentType(MediaType.APPLICATION_JSON).content(reqJsonString))
-			.andExpect(status().isNoContent());
+			.andExpect(status().isOk());
 	}
 }

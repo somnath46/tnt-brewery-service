@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tnt.brewery.model.BeerDto;
@@ -26,12 +28,12 @@ public class BeerController {
 	@Autowired
 	private BeerService beerService;
 
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<BeerDto>> getBeers() {
 		return new ResponseEntity<>(beerService.getBeers(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/{beerId}")
+	@GetMapping(value = "/{beerId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BeerDto> getBeer(@PathVariable final UUID beerId) {
 		return new ResponseEntity<>(beerService.getBeer(beerId), HttpStatus.OK);
 	}
