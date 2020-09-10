@@ -12,8 +12,8 @@ import com.tnt.brewery.domain.Beer;
 import com.tnt.brewery.model.BeerStyleEnum;
 import com.tnt.brewery.repository.BeerRepository;
 
-@Component
-@Transactional
+//@Component
+//@Transactional
 public class LoadInitialData implements CommandLineRunner {
 
 	public static final String BEER_1_UPC = "0631234200036";
