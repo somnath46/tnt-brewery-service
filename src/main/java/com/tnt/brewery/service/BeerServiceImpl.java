@@ -24,7 +24,7 @@ public class BeerServiceImpl implements BeerService {
 
 	@Override
 	public List<BeerDto> getBeers() {
-		return beerMapper.toDtos(beerRepository.findAll());
+		return beerMapper.toDtosWithInventory(beerRepository.findAll());
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class BeerServiceImpl implements BeerService {
 		if (beer.isEmpty()) {
 			throw new InvalidIdentifierException(beerId);
 		}
-		return beerMapper.toDto(beer.get());
+		return beerMapper.toDtoWithInventory(beer.get());
 	}
 
 	@Override
