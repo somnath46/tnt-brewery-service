@@ -10,6 +10,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +46,7 @@ public class BeerDto {
 	private BigDecimal price;
 	@Positive
 	@NotNull
+	@JsonInclude(content = Include.NON_NULL, value = Include.NON_NULL)
 	private Integer quantityOnHand;
 	
 }

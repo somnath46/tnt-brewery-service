@@ -23,17 +23,23 @@ public class BeerServiceImpl implements BeerService {
 	private BeerMapper beerMapper;
 
 	@Override
-	public List<BeerDto> getBeers() {
-		return beerMapper.toDtosWithInventory(beerRepository.findAll());
+	public List<BeerDto> getBeers(boolean showQuantityOnHand) {
+		if (showQuantityOnHand) {
+			return beerMapper.toDtosWithInventory(beerRepository.findAll());
+		}
+		return beerMapper.toDtos(beerRepository.findAll());
 	}
 
 	@Override
-	public BeerDto getBeer(UUID beerId) {
+	public BeerDto getBeer(UUID beerId, boolean showQuantityOnHand) {
 		Optional<Beer> beer = beerRepository.findById(beerId);
 		if (beer.isEmpty()) {
 			throw new InvalidIdentifierException(beerId);
 		}
-		return beerMapper.toDtoWithInventory(beer.get());
+		if (showQuantityOnHand) {
+			return beerMapper.toDtoWithInventory(beer.get());
+		}
+		return beerMapper.toDto(beer.get());
 	}
 
 	@Override

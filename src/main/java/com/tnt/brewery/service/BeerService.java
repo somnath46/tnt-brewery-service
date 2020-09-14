@@ -10,9 +10,9 @@ import com.tnt.brewery.model.BeerDto;
 @Service
 public interface BeerService {
 	
-	public List<BeerDto> getBeers();
+	public List<BeerDto> getBeers(boolean showQuantityOnHand);
 	
-	public BeerDto getBeer(final UUID beerId);
+	public BeerDto getBeer(final UUID beerId, boolean showQuantityOnHand);
 
 	public BeerDto createBear(final BeerDto beerDto);
 	

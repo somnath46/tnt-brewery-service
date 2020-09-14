@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tnt.brewery.model.BeerDto;
@@ -29,13 +29,14 @@ public class BeerController {
 	private BeerService beerService;
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<BeerDto>> getBeers() {
-		return new ResponseEntity<>(beerService.getBeers(), HttpStatus.OK);
+	public ResponseEntity<List<BeerDto>> getBeers(@RequestParam(defaultValue = "false") boolean showQuantityOnHand) {
+		return new ResponseEntity<>(beerService.getBeers(showQuantityOnHand), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{beerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BeerDto> getBeer(@PathVariable final UUID beerId) {
-		return new ResponseEntity<>(beerService.getBeer(beerId), HttpStatus.OK);
+	public ResponseEntity<BeerDto> getBeer(@PathVariable final UUID beerId,
+			@RequestParam(defaultValue = "false") boolean showQuantityOnHand) {
+		return new ResponseEntity<>(beerService.getBeer(beerId, showQuantityOnHand), HttpStatus.OK);
 	}
 
 	@PostMapping
