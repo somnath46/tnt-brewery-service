@@ -1,5 +1,6 @@
 package com.tnt.brewery.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -25,8 +26,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BeerDto {
+public class BeerDto implements Serializable {
 
+	private static final long serialVersionUID = -6327385686981920041L;
 	private UUID id;
 	@Null
 	private Integer version;

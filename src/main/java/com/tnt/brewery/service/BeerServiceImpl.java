@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.tnt.brewery.domain.Beer;
@@ -22,16 +23,20 @@ public class BeerServiceImpl implements BeerService {
 	@Autowired
 	private BeerMapper beerMapper;
 
+	@Cacheable(cacheNames = "beerListCache", condition = "#showQuantityOnHand == false")
 	@Override
 	public List<BeerDto> getBeers(boolean showQuantityOnHand) {
+		System.out.println("getBeers: called");
 		if (showQuantityOnHand) {
 			return beerMapper.toDtosWithInventory(beerRepository.findAll());
 		}
 		return beerMapper.toDtos(beerRepository.findAll());
 	}
 
+	@Cacheable(cacheNames = "beerCache", condition = "#showQuantityOnHand == false")
 	@Override
 	public BeerDto getBeer(UUID beerId, boolean showQuantityOnHand) {
+		System.out.println("getBeer: called");
 		Optional<Beer> beer = beerRepository.findById(beerId);
 		if (beer.isEmpty()) {
 			throw new InvalidIdentifierException(beerId);
