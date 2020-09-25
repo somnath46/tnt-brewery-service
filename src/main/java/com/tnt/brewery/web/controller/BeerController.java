@@ -22,29 +22,35 @@ import com.tnt.brewery.model.BeerDto;
 import com.tnt.brewery.service.BeerService;
 
 @RestController
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v1")
 public class BeerController {
 
 	@Autowired
 	private BeerService beerService;
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/beer", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<BeerDto>> getBeers(@RequestParam(defaultValue = "false") boolean showQuantityOnHand) {
 		return new ResponseEntity<>(beerService.getBeers(showQuantityOnHand), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{beerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/beer/{beerId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BeerDto> getBeer(@PathVariable final UUID beerId,
 			@RequestParam(defaultValue = "false") boolean showQuantityOnHand) {
 		return new ResponseEntity<>(beerService.getBeer(beerId, showQuantityOnHand), HttpStatus.OK);
 	}
 
-	@PostMapping
+	@GetMapping(value = "/beerUpc/{upc}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<BeerDto> getBeerByUpc(@PathVariable final String upc,
+			@RequestParam(defaultValue = "false") boolean showQuantityOnHand) {
+		return new ResponseEntity<>(beerService.getBeerByUpc(upc, showQuantityOnHand), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/beer")
 	public ResponseEntity<BeerDto> createBear(@RequestBody @Valid final BeerDto beerDto) {
 		return new ResponseEntity<>(beerService.createBear(beerDto), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{beerId}")
+	@PutMapping("/beer/{beerId}")
 	public ResponseEntity<BeerDto> updateBear(@PathVariable final UUID beerId, @RequestBody final BeerDto beerDto) {
 		return new ResponseEntity<>(beerService.updateBear(beerId, beerDto), HttpStatus.OK);
 	}

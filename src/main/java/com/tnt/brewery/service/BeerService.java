@@ -18,4 +18,6 @@ public interface BeerService {
 	
 	public BeerDto updateBear(final UUID beerId, final BeerDto beerDto);
 
+	BeerDto getBeerByUpc(String upc, boolean showQuantityOnHand);
+
 }

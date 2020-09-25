@@ -37,7 +37,7 @@ public class BeerControllerTest {
 		return BeerDto.builder()
 			.beerName("Tuborg")
 			.beerStyle(BeerStyleEnum.ALE)
-			.upc(123456L)
+			.upc("123456")
 			.price(BigDecimal.valueOf(150.00))
 			.quantityOnHand(100).build();
 	}
